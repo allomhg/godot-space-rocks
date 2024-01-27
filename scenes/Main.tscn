@@ -1,17 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://bdand06f781fv"]
+[gd_scene load_steps=3 format=3 uid="uid://bdand06f781fv"]
 
 [ext_resource type="Script" path="res://scripts/GameManager.gd" id="1_mt8q4"]
-[ext_resource type="PackedScene" uid="uid://bdwf7a0yfh0l5" path="res://scenes/LargeRock.tscn" id="3_3jxra"]
-[ext_resource type="PackedScene" uid="uid://clgytqik60wb2" path="res://scenes/player.tscn" id="4_l512k"]
+[ext_resource type="PackedScene" uid="uid://clgytqik60wb2" path="res://scenes/Player.tscn" id="4_l512k"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_mt8q4")
 
 [node name="Player" parent="." instance=ExtResource("4_l512k")]
-position = Vector2(649, 360)
+position = Vector2(639, 360)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(640, 360)
 
-[node name="LargeRock" parent="." instance=ExtResource("3_3jxra")]
-position = Vector2(413, 256)
+[node name="Lasers" type="Node2D" parent="."]
+
+[connection signal="laser_shot" from="Player" to="." method="_on_player_laser_shot"]
