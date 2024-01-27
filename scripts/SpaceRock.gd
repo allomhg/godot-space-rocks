@@ -20,10 +20,13 @@ func _ready():
 	match size:
 		RockSize.LARGE:
 			speed = randf_range(30, 50)
+			rock_sprite.texture = preload("res://sprites/large-rock.png")
 		RockSize.MEDIUM:
 			speed = randf_range(55, 70)
+			rock_sprite.texture = preload("res://sprites/rock.png")
 		RockSize.SMALL:
 			speed = randf_range(75, 90)
+			rock_sprite.texture = preload("res://sprites/small-rock.png")
 
 func _process(delta):
 	rock_sprite.rotation_degrees += rotation_speed * delta
