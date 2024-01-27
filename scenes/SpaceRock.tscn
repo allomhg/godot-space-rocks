@@ -1,13 +1,13 @@
 [gd_scene load_steps=3 format=3 uid="uid://bdwf7a0yfh0l5"]
 
-[ext_resource type="Script" path="res://scripts/LargeRock.gd" id="1_ay57d"]
-[ext_resource type="Texture2D" uid="uid://n53d8t5kkl7n" path="res://sprites/large-rock.png" id="2_v5i0i"]
+[ext_resource type="Script" path="res://scripts/SpaceRock.gd" id="1_pdklt"]
+[ext_resource type="Texture2D" uid="uid://n53d8t5kkl7n" path="res://sprites/large-rock.png" id="2_6mgrt"]
 
-[node name="LargeRock" type="Area2D"]
-script = ExtResource("1_ay57d")
+[node name="SpaceRock" type="Area2D"]
+script = ExtResource("1_pdklt")
 
 [node name="Sprite" type="Sprite2D" parent="."]
-texture = ExtResource("2_v5i0i")
+texture = ExtResource("2_6mgrt")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
 polygon = PackedVector2Array(18, -86, 30, -86, 66, -66, 70, -62, 74, -50, 82, -18, 82, -6, 66, 18, 58, 58, 38, 82, 2, 86, -30, 86, -62, 50, -82, -2, -82, -10, -54, -70)

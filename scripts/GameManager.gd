@@ -10,7 +10,8 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	if Input.is_action_just_pressed("restart"):
+		get_tree().reload_current_scene()
 
 func _on_player_laser_shot(laser):
 	lasers.add_child(laser)
