@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://bdand06f781fv"]
+
+[ext_resource type="Script" path="res://GameManager.gd" id="1_h4qpm"]
+[ext_resource type="Script" path="res://Player.gd" id="1_mrcyc"]
+[ext_resource type="Texture2D" uid="uid://dpf8h6itym3gl" path="res://Sprites/player.png" id="1_tgsga"]
+[ext_resource type="Texture2D" uid="uid://n53d8t5kkl7n" path="res://Sprites/large-rock.png" id="2_qwyhj"]
+[ext_resource type="Script" path="res://LargeRock.gd" id="4_dvpyv"]
+[ext_resource type="Script" path="res://CharacterBody2D.gd" id="6_af6jv"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_h4qpm")
+
+[node name="Player" type="RigidBody2D" parent="."]
+visible = false
+gravity_scale = 0.0
+script = ExtResource("1_mrcyc")
+
+[node name="Sprite" type="Sprite2D" parent="Player"]
+texture = ExtResource("1_tgsga")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Player"]
+polygon = PackedVector2Array(32, 0, -24, 30, -32, 30, -32, 18, -24, 0, -32, -18, -32, -30, -24, -30)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="LargeRock" type="RigidBody2D" parent="."]
+gravity_scale = 0.0
+script = ExtResource("4_dvpyv")
+
+[node name="Sprite" type="Sprite2D" parent="LargeRock"]
+position = Vector2(-134, -124)
+texture = ExtResource("2_qwyhj")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="LargeRock"]
+polygon = PackedVector2Array(-188, -194, -116, -210, -104, -210, -64, -186, -52, -142, -52, -130, -68, -106, -72, -86, -76, -66, -96, -42, -132, -38, -164, -38, -196, -74, -200, -94, -216, -126, -216, -134, -192, -182)
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+script = ExtResource("6_af6jv")
+
+[node name="Sprite" type="Sprite2D" parent="CharacterBody2D"]
+texture = ExtResource("1_tgsga")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="CharacterBody2D"]
+polygon = PackedVector2Array(32, 0, -24, 30, -32, 30, -32, 18, -24, 0, -32, -18, -32, -30, -24, -30)
