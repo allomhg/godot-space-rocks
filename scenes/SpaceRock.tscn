@@ -1,10 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://bdwf7a0yfh0l5"]
+[gd_scene load_steps=4 format=3 uid="uid://bdwf7a0yfh0l5"]
 
 [ext_resource type="Script" path="res://scripts/SpaceRock.gd" id="1_pdklt"]
 [ext_resource type="Texture2D" uid="uid://n53d8t5kkl7n" path="res://sprites/large-rock.png" id="2_6mgrt"]
+[ext_resource type="Shape2D" uid="uid://broiybupahv1b" path="res://resources/SpaceRock_CShape_Large.tres" id="3_cma3r"]
 
 [node name="SpaceRock" type="Area2D"]
 script = ExtResource("1_pdklt")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 texture = ExtResource("2_6mgrt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = ExtResource("3_cma3r")
