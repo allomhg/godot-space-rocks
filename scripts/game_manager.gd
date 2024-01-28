@@ -11,12 +11,12 @@ extends Node2D
 
 var rock_scene = preload("res://scenes/space_rock.tscn")
 
-var score : int = 0:
+var score : int:
 	set(value):
 		score = value
 		hud.score = score
 		
-var lives : int = 3:
+var lives : int:
 	set(value):
 		lives = value
 		hud.init_lives(lives)
@@ -26,6 +26,7 @@ func _ready():
 	game_over_screen.visible = false
 	lives = 3
 	score = 0
+	
 	if rocks != null:
 		for rock in rocks.get_children():
 			rock.connect("exploded", _on_space_rock_exploded)
@@ -63,6 +64,7 @@ func _on_player_died():
 	lives -= 1
 	#print(lives)
 	if lives <= 0:
+		await get_tree().create_timer(2).timeout
 		game_over_screen.visible = true
 	else:
 		await get_tree().create_timer(1).timeout
