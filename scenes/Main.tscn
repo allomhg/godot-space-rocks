@@ -56,7 +56,6 @@ visible = false
 [node name="StarFieldBackground" type="Node2D" parent="."]
 
 [node name="StarFieldBack" type="GPUParticles2D" parent="StarFieldBackground"]
-visible = false
 z_index = -100
 position = Vector2(1300, 360)
 amount = 750
