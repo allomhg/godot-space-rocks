@@ -74,6 +74,7 @@ func shoot_laser():
 	l.global_position = muzzle.global_position # Set the position of the laser to the position of Muzzle (Node2D)
 	l.rotation = rotation # Set rotation of the laser to the rotation of the player
 	emit_signal("laser_shot", l)
+	
 
 func player_death():
 	if alive == true:
@@ -90,7 +91,6 @@ func respawn(pos):
 		global_position = pos
 		velocity = Vector2.ZERO
 		player_sprite.visible = true
-		#await get_tree().create_timer(0.5).timeout
 		# Above disable player from moving, need to figure out how to 
 		# make the character controlled but invincible for a short time
 		process_mode = Node.PROCESS_MODE_INHERIT # Set to default

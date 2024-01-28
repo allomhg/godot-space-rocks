@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bdand06f781fv"]
+[gd_scene load_steps=12 format=3 uid="uid://bdand06f781fv"]
 
 [ext_resource type="Script" path="res://scripts/game_manager.gd" id="1_5n74x"]
 [ext_resource type="PackedScene" uid="uid://4dfb6heb6h0y" path="res://scenes/hud.tscn" id="2_df4m7"]
@@ -6,6 +6,11 @@
 [ext_resource type="PackedScene" uid="uid://dq2d8tr0o6083" path="res://scenes/game_over_screen.tscn" id="3_57asb"]
 [ext_resource type="PackedScene" uid="uid://de6mbqbr2wsjg" path="res://scenes/lasers.tscn" id="3_yk3lv"]
 [ext_resource type="PackedScene" uid="uid://jaa1j7doymyd" path="res://scenes/rocks.tscn" id="4_0egyg"]
+[ext_resource type="PackedScene" uid="uid://b1qvybvdc8djl" path="res://scenes/player_spawn_area.tscn" id="7_0680w"]
+[ext_resource type="AudioStream" uid="uid://d13ttpk7r6cd7" path="res://sounds/snd_shoot.wav" id="8_5ynto"]
+[ext_resource type="AudioStream" uid="uid://bxn8m0sfjca3w" path="res://sounds/snd_rockdestroy.wav" id="9_hik87"]
+[ext_resource type="AudioStream" uid="uid://d4hdb0cx7oj6k" path="res://sounds/snd_lose.wav" id="10_15jvw"]
+[ext_resource type="AudioStream" uid="uid://r4ocwewsg6yw" path="res://sounds/snd_music.mp3" id="11_smdt3"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_5n74x")
@@ -18,7 +23,7 @@ script = ExtResource("1_5n74x")
 visible = false
 
 [node name="Player" parent="." instance=ExtResource("2_iprri")]
-position = Vector2(639, 360)
+position = Vector2(640, 360)
 scale = Vector2(0.75, 0.75)
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -30,6 +35,22 @@ position = Vector2(640, 360)
 
 [node name="PlayerSpawnPosition" type="Node2D" parent="."]
 position = Vector2(640, 360)
+
+[node name="PlayerSpawnArea" parent="PlayerSpawnPosition" instance=ExtResource("7_0680w")]
+
+[node name="LaserSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_5ynto")
+
+[node name="RockExplodedSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_hik87")
+
+[node name="PlayerDeathSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_15jvw")
+
+[node name="GameMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("11_smdt3")
+volume_db = -10.0
+autoplay = true
 
 [connection signal="died" from="Player" to="." method="_on_player_died"]
 [connection signal="laser_shot" from="Player" to="." method="_on_player_laser_shot"]

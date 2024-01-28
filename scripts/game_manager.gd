@@ -8,6 +8,9 @@ extends Node2D
 @onready var hud = $UI/HUD
 @onready var game_over_screen = $UI/GameOverScreen
 @onready var player_spawn = $PlayerSpawnPosition
+@onready var player_spawn_area = $PlayerSpawnPosition/PlayerSpawnArea
+@onready var laser_sound = $LaserSound
+@onready var game_music = $GameMusic
 
 var rock_scene = preload("res://scenes/space_rock.tscn")
 
@@ -33,10 +36,18 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
+	# Restart the game if R is pressed
 	if Input.is_action_just_pressed("restart"):
 		get_tree().reload_current_scene()
+	
+	if game_music.playing == false:
+		game_music.play()
 
 func _on_player_laser_shot(laser):
+	#$LaserSound.pitch
+	#$LaserSound.play() # Figure out how to adjust pitch on shoot
+	laser_sound.pitch_scale = randf_range(0.80, 1.50)
+	laser_sound.play()
 	lasers.add_child(laser)
 
 func _on_space_rock_exploded(pos, size, points):
@@ -49,7 +60,7 @@ func _on_space_rock_exploded(pos, size, points):
 				spawn_rock(pos, SpaceRock.RockSize.SMALL)
 			SpaceRock.RockSize.SMALL:
 				pass
-	print(score)
+	$RockExplodedSound.play()
 
 func spawn_rock(pos, size):
 	var a = rock_scene.instantiate()
@@ -60,12 +71,19 @@ func spawn_rock(pos, size):
 	#rocks.add_child(a) # Cannot use this as it creates an error
 	rocks.call_deferred("add_child", a) # Use this instead
 
+# Handles what happens when the player dies, depending on the number of lives they have
 func _on_player_died():
+	$PlayerDeathSound.play()
 	lives -= 1
-	#print(lives)
+	
+	# If player loses all lives display game over screen after a delay
 	if lives <= 0:
 		await get_tree().create_timer(2).timeout
 		game_over_screen.visible = true
+	# Respawn the player if the spawn area if empty
 	else:
 		await get_tree().create_timer(1).timeout
+		while !player_spawn_area.is_empty:
+			await get_tree().create_timer(0.1).timeout
 		player.respawn(player_spawn.global_position)
+	
