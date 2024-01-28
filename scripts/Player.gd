@@ -1,8 +1,9 @@
-extends CharacterBody2D
+class_name Player extends CharacterBody2D
 
 @onready var screen_size : Vector2 = get_viewport_rect().size
 
 signal laser_shot(laser)
+signal died()
 
 @export var acceleration : float = 10.0
 @export var max_speed : float = 350.0
@@ -10,9 +11,11 @@ signal laser_shot(laser)
 @export var rate_of_fire: float = 0.2
 
 @onready var muzzle = $Muzzle # Load Muzzle Node into variable on ready
+@onready var player_sprite = $Sprite
 
 var input_vector : Vector2
 var shoot_cd : bool = false
+var alive : bool = true
 
 var laser_scene = preload("res://scenes/laser.tscn")
 
@@ -72,6 +75,23 @@ func shoot_laser():
 	l.rotation = rotation # Set rotation of the laser to the rotation of the player
 	emit_signal("laser_shot", l)
 
-func game_over():
-	get_tree().reload_current_scene()
+func player_death():
+	if alive == true:
+		alive = false
+		emit_signal("died")
+		print("Player died")
+		#queue_free()
+		player_sprite.visible = false
+		process_mode = Node.PROCESS_MODE_DISABLED # Disable processing so we don't get collisions
 
+func respawn(pos):
+	if !alive:
+		alive = true
+		global_position = pos
+		velocity = Vector2.ZERO
+		player_sprite.visible = true
+		#await get_tree().create_timer(0.5).timeout
+		# Above disable player from moving, need to figure out how to 
+		# make the character controlled but invincible for a short time
+		process_mode = Node.PROCESS_MODE_INHERIT # Set to default
+		

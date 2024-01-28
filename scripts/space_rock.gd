@@ -69,7 +69,7 @@ func rock_screen_wrap():
 	position.y = wrapf(position.y, -cshape_radius, screen_size.y + cshape_radius)
 
 func _on_body_entered(body):
-	#print("yes")
-	#print(body)
-	if body.is_in_group("Player"):
-		body.game_over()
+	if body is Player:
+		print("Player hit rock")
+		var player = body
+		player.player_death()

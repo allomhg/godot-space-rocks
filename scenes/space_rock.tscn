@@ -5,6 +5,8 @@
 [ext_resource type="Shape2D" uid="uid://broiybupahv1b" path="res://resources/rock_cshape_large.tres" id="3_cma3r"]
 
 [node name="SpaceRock" type="Area2D"]
+collision_layer = 4
+collision_mask = 11
 script = ExtResource("1_pdklt")
 
 [node name="Sprite" type="Sprite2D" parent="."]

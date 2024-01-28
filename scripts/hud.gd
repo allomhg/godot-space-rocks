@@ -2,13 +2,16 @@ extends Control
 
 @onready var score = $Score:
 	set(value):
-		pass
+		score.text = str("SCORE: ",value)
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+@onready var lives = $LivesHBox
 
+var ui_life_scene = preload("res://scenes/ui_life.tscn")
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+func init_lives(amount):
+	for ul in lives.get_children():
+		ul.queue_free()
+	
+	for i in amount:
+		var ul = ui_life_scene.instantiate()
+		lives.add_child(ul)

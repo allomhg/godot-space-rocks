@@ -6,17 +6,15 @@
 
 [node name="SpaceRock" parent="." instance=ExtResource("1_xkcn5")]
 position = Vector2(306, 192)
-collision_layer = 4
-collision_mask = 11
 
 [node name="SpaceRock2" parent="." instance=ExtResource("1_xkcn5")]
-position = Vector2(899, 171)
-
-[node name="SpaceRock3" parent="." instance=ExtResource("1_xkcn5")]
-position = Vector2(1102, 485)
+position = Vector2(889, 178)
 
 [node name="SpaceRock4" parent="." instance=ExtResource("1_xkcn5")]
-position = Vector2(202, 533)
+position = Vector2(228, 543)
 
 [node name="SpaceRock5" parent="." instance=ExtResource("1_xkcn5")]
-position = Vector2(576, 597)
+position = Vector2(650, 589)
+
+[node name="SpaceRock3" parent="." instance=ExtResource("1_xkcn5")]
+position = Vector2(1025, 473)
