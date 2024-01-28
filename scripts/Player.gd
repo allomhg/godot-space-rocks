@@ -12,6 +12,7 @@ signal died()
 
 @onready var muzzle = $Muzzle # Load Muzzle Node into variable on ready
 @onready var player_sprite = $Sprite
+@onready var cshape = $CollisionShape2D
 
 var input_vector : Vector2
 var shoot_cd : bool = false
@@ -19,15 +20,13 @@ var alive : bool = true
 
 var laser_scene = preload("res://scenes/laser.tscn")
 
-func _ready():
-	#print(str("Screen size = ", game_manager.screen_size))
-	pass
-
 func _process(_delta):
+	if !alive: return # If the player is not alive, then do nothing
 	_has_player_shot()
 	screen_wrap()
 
 func _physics_process(delta):
+	if !alive: return # If the player is not alive, then do nothing
 	_player_move(delta)
 	_slow_down()
 	move_and_slide()
@@ -79,11 +78,9 @@ func shoot_laser():
 func player_death():
 	if alive == true:
 		alive = false
-		emit_signal("died")
-		print("Player died")
-		#queue_free()
 		player_sprite.visible = false
-		process_mode = Node.PROCESS_MODE_DISABLED # Disable processing so we don't get collisions
+		cshape.set_deferred("disabled", true)
+		emit_signal("died")
 
 func respawn(pos):
 	if !alive:
@@ -91,7 +88,4 @@ func respawn(pos):
 		global_position = pos
 		velocity = Vector2.ZERO
 		player_sprite.visible = true
-		# Above disable player from moving, need to figure out how to 
-		# make the character controlled but invincible for a short time
-		process_mode = Node.PROCESS_MODE_INHERIT # Set to default
-		
+		cshape.set_deferred("disabled", false)

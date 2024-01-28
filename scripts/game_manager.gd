@@ -75,6 +75,7 @@ func spawn_rock(pos, size):
 func _on_player_died():
 	$PlayerDeathSound.play()
 	lives -= 1
+	player.global_position = player_spawn.global_position
 	
 	# If player loses all lives display game over screen after a delay
 	if lives <= 0:
