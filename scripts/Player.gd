@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+@onready var screen_size : Vector2 = get_viewport_rect().size
+
 signal laser_shot(laser)
 
 @export var acceleration : float = 10.0
@@ -10,8 +12,9 @@ signal laser_shot(laser)
 @onready var muzzle = $Muzzle # Load Muzzle Node into variable on ready
 
 var input_vector : Vector2
-var laser_scene = preload("res://scenes/laser.tscn")
 var shoot_cd : bool = false
+
+var laser_scene = preload("res://scenes/laser.tscn")
 
 func _ready():
 	#print(str("Screen size = ", game_manager.screen_size))
@@ -47,8 +50,10 @@ func _slow_down():
 
 # Wraps the player's ship around the screen edges
 func screen_wrap():
-	position.x = wrapf(position.x, -10, game_manager.screen_size.x + 10) # Variable to track, min value, max value
-	position.y = wrapf(position.y, -10, game_manager.screen_size.y + 10)
+	#position.x = wrapf(position.x, -10, game_manager.screen_size.x + 10) # Variable to track, min value, max value
+	#position.y = wrapf(position.y, -10, game_manager.screen_size.y + 10)
+	position.x = wrapf(position.x, -10, screen_size.x + 10) # Variable to track, min value, max value
+	position.y = wrapf(position.y, -10, screen_size.y + 10)
 
 # Checks to see if the player has shot and creates a timer to limit rate of fire
 func _has_player_shot():

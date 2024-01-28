@@ -1,6 +1,8 @@
 class_name SpaceRock extends Area2D
 
-signal exploded(pos, size) # Send position and size of rock when exploded
+@onready var screen_size : Vector2 = get_viewport_rect().size
+
+signal exploded(pos, size, points) # Send position and size of rock when exploded
 
 enum RockSize {
 	LARGE,
@@ -8,14 +10,26 @@ enum RockSize {
 	SMALL
 }
 
-var movement_vector : Vector2 = Vector2(0, -1)
-var speed : float = 50.0
-var rotation_speed : float = randf_range(10.0, 100.0)
-
 @export var size = RockSize.LARGE
 
 @onready var rock_sprite = $Sprite
 @onready var cshape = $CollisionShape2D
+
+var movement_vector : Vector2 = Vector2(0, -1)
+var speed : float = 50.0
+var rotation_speed : float = randf_range(10.0, 100.0)
+
+var points : int:
+	get:
+		match size:
+			RockSize.LARGE:
+				return 100
+			RockSize.MEDIUM:
+				return 150
+			RockSize.SMALL:
+				return 200
+			_:
+				return 0
 
 func _ready():
 	rotation_degrees = randf_range(0, 360)
@@ -43,14 +57,16 @@ func _physics_process(delta):
 	global_position += movement_vector.rotated(rotation) * speed * delta
 
 func explode():
-	emit_signal("exploded", global_position, size)
+	emit_signal("exploded", global_position, size, points)
 	queue_free()
 
  #Wraps the node around the screen edges
 func rock_screen_wrap():
 	var cshape_radius = cshape.shape.radius # Get the radius of the collision shape
-	position.x = wrapf(position.x, -cshape_radius, game_manager.screen_size.x + cshape_radius) # Variable to track, min value, max value
-	position.y = wrapf(position.y, -cshape_radius, game_manager.screen_size.y + cshape_radius)
+	#position.x = wrapf(position.x, -cshape_radius, game_manager.screen_size.x + cshape_radius) # Variable to track, min value, max value
+	#position.y = wrapf(position.y, -cshape_radius, game_manager.screen_size.y + cshape_radius)
+	position.x = wrapf(position.x, -cshape_radius, screen_size.x + cshape_radius) # Variable to track, min value, max value
+	position.y = wrapf(position.y, -cshape_radius, screen_size.y + cshape_radius)
 
 func _on_body_entered(body):
 	#print("yes")

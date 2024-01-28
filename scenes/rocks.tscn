@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://jaa1j7doymyd"]
+
+[ext_resource type="PackedScene" uid="uid://bdwf7a0yfh0l5" path="res://scenes/space_rock.tscn" id="1_xkcn5"]
+
+[node name="Rocks" type="Node2D"]
+
+[node name="SpaceRock" parent="." instance=ExtResource("1_xkcn5")]
+position = Vector2(306, 192)
+collision_layer = 4
+collision_mask = 11
+
+[node name="SpaceRock2" parent="." instance=ExtResource("1_xkcn5")]
+position = Vector2(899, 171)
+
+[node name="SpaceRock3" parent="." instance=ExtResource("1_xkcn5")]
+position = Vector2(1102, 485)
+
+[node name="SpaceRock4" parent="." instance=ExtResource("1_xkcn5")]
+position = Vector2(202, 533)
+
+[node name="SpaceRock5" parent="." instance=ExtResource("1_xkcn5")]
+position = Vector2(576, 597)
