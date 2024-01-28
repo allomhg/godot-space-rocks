@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://su14bra7aibe"]
+
+[ext_resource type="Script" path="res://scripts/PlayMusic.gd" id="1_8mfov"]
+[ext_resource type="AudioStream" uid="uid://r4ocwewsg6yw" path="res://sounds/snd_music.mp3" id="2_cg0m4"]
+
+[node name="PlayMusic" type="Node2D"]
+script = ExtResource("1_8mfov")
+
+[node name="GameMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_cg0m4")
+volume_db = -10.0
+autoplay = true

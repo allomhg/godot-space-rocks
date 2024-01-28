@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://dgf00xaqf0hfj"]
+
+[ext_resource type="PackedScene" uid="uid://bde64pfhg0egw" path="res://scenes/start_screen.tscn" id="1_rpdv6"]
+
+[node name="StartBackground" type="Node2D"]
+
+[node name="StartScreenUI" type="CanvasLayer" parent="."]
+
+[node name="StartScreen" parent="StartScreenUI" instance=ExtResource("1_rpdv6")]
