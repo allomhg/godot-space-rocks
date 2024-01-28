@@ -1,4 +1,6 @@
-extends Area2D
+class_name SpaceRock extends Area2D
+
+signal exploded(pos, size) # Send position and size of rock when exploded
 
 enum RockSize {
 	LARGE,
@@ -8,7 +10,7 @@ enum RockSize {
 
 var movement_vector : Vector2 = Vector2(0, -1)
 var speed : float = 50.0
-var rotation_speed : float = 25.0
+var rotation_speed : float = randf_range(10.0, 100.0)
 
 @export var size = RockSize.LARGE
 
@@ -40,8 +42,18 @@ func _process(delta):
 func _physics_process(delta):
 	global_position += movement_vector.rotated(rotation) * speed * delta
 
+func explode():
+	emit_signal("exploded", global_position, size)
+	queue_free()
+
  #Wraps the node around the screen edges
 func rock_screen_wrap():
 	var cshape_radius = cshape.shape.radius # Get the radius of the collision shape
 	position.x = wrapf(position.x, -cshape_radius, game_manager.screen_size.x + cshape_radius) # Variable to track, min value, max value
 	position.y = wrapf(position.y, -cshape_radius, game_manager.screen_size.y + cshape_radius)
+
+func _on_body_entered(body):
+	#print("yes")
+	#print(body)
+	if body.is_in_group("Player"):
+		body.game_over()

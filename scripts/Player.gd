@@ -14,7 +14,8 @@ var laser_scene = preload("res://scenes/laser.tscn")
 var shoot_cd : bool = false
 
 func _ready():
-	print(str("Screen size = ", game_manager.screen_size))
+	#print(str("Screen size = ", game_manager.screen_size))
+	pass
 
 func _process(_delta):
 	_has_player_shot()
@@ -65,3 +66,7 @@ func shoot_laser():
 	l.global_position = muzzle.global_position # Set the position of the laser to the position of Muzzle (Node2D)
 	l.rotation = rotation # Set rotation of the laser to the rotation of the player
 	emit_signal("laser_shot", l)
+
+func game_over():
+	get_tree().reload_current_scene()
+
