@@ -7,15 +7,14 @@ signal laser_shot(laser)
 @export var rotation_speed : float = 250.0
 @export var rate_of_fire: float = 0.2
 
-
 @onready var muzzle = $Muzzle # Load Muzzle Node into variable on ready
 
 var input_vector : Vector2
-var laser_scene = preload("res://scenes/Laser.tscn")
+var laser_scene = preload("res://scenes/laser.tscn")
 var shoot_cd : bool = false
 
 func _ready():
-	print(str("Screen size = ", GameManager.screen_size))
+	print(str("Screen size = ", game_manager.screen_size))
 
 func _process(_delta):
 	_has_player_shot()
@@ -47,8 +46,8 @@ func _slow_down():
 
 # Wraps the player's ship around the screen edges
 func screen_wrap():
-	position.x = wrapf(position.x, -10, GameManager.screen_size.x + 10) # Variable to track, min value, max value
-	position.y = wrapf(position.y, -10, GameManager.screen_size.y + 10)
+	position.x = wrapf(position.x, -10, game_manager.screen_size.x + 10) # Variable to track, min value, max value
+	position.y = wrapf(position.y, -10, game_manager.screen_size.y + 10)
 
 # Checks to see if the player has shot and creates a timer to limit rate of fire
 func _has_player_shot():

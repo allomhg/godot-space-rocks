@@ -22,25 +22,26 @@ func _ready():
 		RockSize.LARGE:
 			speed = randf_range(50, 100)
 			rock_sprite.texture = preload("res://sprites/large-rock.png")
-			cshape.shape = preload("res://resources/SpaceRock_CShape_Large.tres")
+			cshape.shape = preload("res://resources/rock_cshape_large.tres")
 		RockSize.MEDIUM:
 			speed = randf_range(101, 150)
 			rock_sprite.texture = preload("res://sprites/rock.png")
-			cshape.shape = preload("res://resources/SpaceRock_CShape_Medium.tres")
+			cshape.shape = preload("res://resources/rock_cshape_medium.tres")
 		RockSize.SMALL:
 			speed = randf_range(151, 200)
 			rock_sprite.texture = preload("res://sprites/small-rock.png")
-			cshape.shape = preload("res://resources/SpaceRock_CShape_Small.tres")
+			cshape.shape = preload("res://resources/rock_cshape_small.tres")
 
 func _process(delta):
 	rock_sprite.rotation_degrees += rotation_speed * delta
-	screen_wrap()
+	rock_screen_wrap()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta):
 	global_position += movement_vector.rotated(rotation) * speed * delta
 
  #Wraps the node around the screen edges
-func screen_wrap():
-	position.x = wrapf(position.x, -cshape.shape.radius, GameManager.screen_size.x + cshape.shape.radius) # Variable to track, min value, max value
-	position.y = wrapf(position.y, -cshape.shape.radius, GameManager.screen_size.y + cshape.shape.radius)
+func rock_screen_wrap():
+	var cshape_radius = cshape.shape.radius # Get the radius of the collision shape
+	position.x = wrapf(position.x, -cshape_radius, game_manager.screen_size.x + cshape_radius) # Variable to track, min value, max value
+	position.y = wrapf(position.y, -cshape_radius, game_manager.screen_size.y + cshape_radius)
