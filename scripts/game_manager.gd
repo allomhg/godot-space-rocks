@@ -17,6 +17,9 @@ func _ready():
 	player = get_node("root/Main/Player")
 	lasers = get_node("root/Main/Lasers")
 	rocks = get_node("root/Main/Rocks")
+	#player = $Player
+	#lasers = $Lasers
+	#rocks = $Rocks
 		
 	if rocks != null:
 		for rock in rocks.get_children():
