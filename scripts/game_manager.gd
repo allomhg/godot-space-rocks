@@ -12,7 +12,8 @@ extends Node2D
 @onready var laser_sound = $LaserSound
 #@onready var game_music = $GameMusic
 
-var rock_scene = preload("res://scenes/space_rock.tscn")
+var space_rock_scene = preload("res://scenes/space_rock.tscn")
+var rock_count: int = 0
 
 var score : int:
 	set(value):
@@ -29,6 +30,7 @@ func _ready():
 	game_over_screen.visible = false
 	lives = 3
 	score = 0
+	rock_count = get_child_count(rocks)
 	
 	if rocks != null:
 		for rock in rocks.get_children():
@@ -40,8 +42,8 @@ func _process(_delta):
 	if Input.is_action_just_pressed("restart"):
 		get_tree().reload_current_scene()
 	
-	#if game_music.playing == false:
-		#game_music.play()
+	if rock_count == 0:
+		spawn_new_rocks()
 
 func _on_player_laser_shot(laser):
 	laser_sound.pitch_scale = randf_range(0.80, 1.50)
@@ -61,13 +63,21 @@ func _on_space_rock_exploded(pos, size, points):
 	$RockExplodedSound.play()
 
 func spawn_rock(pos, size):
-	var a = rock_scene.instantiate()
+	var a = space_rock_scene.instantiate()
 	a.global_position = pos
 	a.size = size
 	a.connect("exploded", _on_space_rock_exploded)
 	#a.connect("body_entered", _on_body_entered)
 	#rocks.add_child(a) # Cannot use this as it creates an error
 	rocks.call_deferred("add_child", a) # Use this instead
+	
+# !!! NOT FINISHED !!! #
+# Create a function that spawns size more large rocks when the $Rocks Node is empty
+func spawn_new_rocks():
+	var rock_count: int = 0
+	rock_count = get_child_count(rocks)
+	
+	#pass
 
 # Handles what happens when the player dies, depending on the number of lives they have
 func _on_player_died():
