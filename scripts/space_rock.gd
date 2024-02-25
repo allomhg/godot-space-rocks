@@ -28,7 +28,7 @@ var points : int:
 				return 150
 			RockSize.SMALL:
 				return 200
-			_:
+			_: # base / default case
 				return 0
 
 func _ready():

@@ -30,7 +30,7 @@ func _ready():
 	game_over_screen.visible = false
 	lives = 3
 	score = 0
-	rock_count = get_child_count(rocks)
+	
 	
 	if rocks != null:
 		for rock in rocks.get_children():
@@ -42,6 +42,8 @@ func _process(_delta):
 	if Input.is_action_just_pressed("restart"):
 		get_tree().reload_current_scene()
 	
+	# Spawn new rocks when $Rocks Node is empty
+	rock_count = rocks.get_child_count()
 	if rock_count == 0:
 		spawn_new_rocks()
 
@@ -70,14 +72,21 @@ func spawn_rock(pos, size):
 	#a.connect("body_entered", _on_body_entered)
 	#rocks.add_child(a) # Cannot use this as it creates an error
 	rocks.call_deferred("add_child", a) # Use this instead
-	
-# !!! NOT FINISHED !!! #
+
+# !!! NEED TO ADD FUNCTIONALITY TO NOT SPAWN IN CENTRE OF SCREEN OR NEAR PLAYER !!! #
 # Create a function that spawns size more large rocks when the $Rocks Node is empty
 func spawn_new_rocks():
-	var rock_count: int = 0
-	rock_count = get_child_count(rocks)
+	var rand_x_pos: float
+	var rand_y_pos: float
 	
-	#pass
+	for i in range(6):
+		var new_rock = space_rock_scene.instantiate()
+		rand_x_pos = randf_range(0, 1280)
+		rand_y_pos = randf_range(0, 720)
+		new_rock.global_position = Vector2(rand_x_pos, rand_y_pos)
+		new_rock.size = SpaceRock.RockSize.LARGE
+		new_rock.connect("exploded", _on_space_rock_exploded)
+		rocks.call_deferred("add_child", new_rock)
 
 # Handles what happens when the player dies, depending on the number of lives they have
 func _on_player_died():
