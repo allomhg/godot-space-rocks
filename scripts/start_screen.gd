@@ -3,7 +3,7 @@ extends Control
 @export_file("main.tscn") var load_main
 
 @onready var controls_txt : VBoxContainer = get_node("VBoxContainer/ControlsTxtBox/")
-@onready var start_screen_ui : Control = $startscreen
+#@onready var start_screen_ui : Control = $startscreen
 
 func _ready():
 	controls_txt.visible = false
