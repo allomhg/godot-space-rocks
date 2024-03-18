@@ -12,6 +12,7 @@ extends Node2D
 @onready var laser_sound = $LaserSound
 #@onready var game_music = $GameMusic
 
+var explosion_scene = preload("res://scenes/explosion.tscn")
 var space_rock_scene = preload("res://scenes/space_rock.tscn")
 var rock_count: int = 0
 
@@ -101,8 +102,6 @@ func spawn_new_rocks():
 		new_rock.connect("exploded", _on_space_rock_exploded)
 		rocks.call_deferred("add_child", new_rock)
 
-# First I will make this just to suit 1280x720 screen size.
-# Then I will adjust it to suit variable screen sizes.
 func get_rand_edge():
 	var rand_edge: int = randi_range(0, 3)
 	var x_pos: float = 0.0
@@ -126,6 +125,7 @@ func get_rand_edge():
 
 # Handles what happens when the player dies, depending on the number of lives they have
 func _on_player_died():
+	
 	$PlayerDeathSound.play()
 	lives -= 1
 	player.global_position = player_spawn.global_position

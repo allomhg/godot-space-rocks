@@ -14,6 +14,7 @@ enum RockSize {
 
 @onready var rock_sprite = $Sprite
 @onready var cshape = $CollisionShape2D
+@onready var explosion = $Explosion
 
 var movement_vector : Vector2 = Vector2(0, -1)
 var speed : float = 50.0
@@ -58,6 +59,7 @@ func _physics_process(delta):
 
 func explode():
 	emit_signal("exploded", global_position, size, points)
+	$Explosion.emitting = true
 	queue_free()
 
  #Wraps the node around the screen edges
